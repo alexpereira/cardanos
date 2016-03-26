@@ -1,0 +1,10 @@
+{
+  "name": "cardanos-chat",
+  "version": "0.0.1",
+  "description": "my first socket.io app",
+  "dependencies": {
+    "express": "^4.10.2",
+    "google-translate": "^1.0.6",
+    "socket.io": "^1.4.5"
+  }
+}
