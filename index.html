@@ -3,48 +3,71 @@
 <head>
   <meta charset="utf-8">
 	<title>Cardanos Voice</title>
-
 	<link rel="stylesheet" type="text/css" href="assets/style.css">
-
-
   <script type="text/javascript" src="assets/jquery-1.5.1.js"></script>
   <script type="text/javascript" src="assets/jquery.videoBG.js"></script>
   <script type="text/javascript" src="assets/script.js"></script>
 
+
+
 </head>
 <body>
+  <div class="videoContainer">
+      <div class="overlay"></div>
+      <div class="video"></div>
+  </div>
+<div class="home">
+
+  <div class="logo"></div>
+  <h1></h1>
+  <p></p>
 
 
+  <form id="signIn" action="">
+    <input id="nickname" placeholder="Nickname" class="required">
+    <select id="language" class="required">
+      <option value="">Languages</option>
+      <option value="eng">English</option>
+      <option value="pt">Portuguese</option>
+      <option value="es">Espanish</option>
+    </select>
+    <button>Send</button>
+  </form>
 
-    <ul id="messages"></ul>
-    <form action="">
-      <input id="m" autocomplete="off" /><button>Send</button>
-    </form>
-
-
-
-
-
-<div class="videoContainer">
-    <div class="overlay"></div>
-    <div class="video"></div>
+</div>
+<div class="message-box">
+  <ul id="messages"></ul>
+  <form id="message" action="">
+    <input id="m" autocomplete="off" /><button>Send</button>
+  </form>
 </div>
 
+
   <script src="/socket.io/socket.io.js"></script>
-<!--<script src="http://code.jquery.com/jquery-1.11.1.js"></script>-->
-<script>
-  var socket = io();
-  $('form').submit(function(){
-    socket.emit('chat message', $('#m').val());
-    $('#m').val('');
-    return false;
-  });
-  socket.on('chat message', function(msg){
-    $('#messages').append($('<li>').text(msg));
-  });
+  <script>
+    var socket = io();
 
+    $('.message-box').hide();
 
-</script>
+    $('#signIn').submit(function(){
+      socket.emit('nickname', $('#nickname').val());
+      socket.emit('language', $('#language').val());
+      $('.home').hide();
+      $('.message-box').show();
+      return false;
+    });
+
+    $('#message').submit(function(){
+      socket.emit('chat message', $('#m').val());
+      $('#m').val('');
+      return false;
+    });
+
+    socket.on('chat message', function(msg){
+      $('#messages').append($('<li>').text(msg));
+    });
+
+  </script>
 
 </body>
 </html>
