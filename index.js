@@ -46,7 +46,12 @@ io.on('connection', function(socket){
 	  }
 	  a = function(conn) {
 	      googleTranslate.translate(msg, info2.language, function(err, translation) {
-		  conn.emit('chat message', {text: translation.translatedText, bgcolor: "black", txtcolor: "white"});
+		  if (typeof translation != 'undefined') {
+		      msg_to_send = translation.translatedText;
+		  } else {
+		      msg_to_send = msg;
+		  }
+		  conn.emit('chat message', {text: msg_to_send, bgcolor: "black", txtcolor: "white"});
 	      });
 	  }
 	  a(info2.conn);
