@@ -36,12 +36,12 @@ io.on('connection', function(socket){
     for(id in clientList) {
       var info2 = clientList[id];
       if (info2.language == '') {
-    continue
+	  continue
       }
       a = function(conn) {
-    googleTranslate.translate(msg, info2.language, function(err, translation) {
+	  googleTranslate.translate(msg, info2.language, function(err, translation) {
               conn.emit('chat message', info.nickname + ": " + translation.translatedText);
-    });
+	  });
       }
       a(info2.conn);
     }
@@ -53,6 +53,6 @@ io.on('connection', function(socket){
   });
 });
 
-http.listen(3000, function(){
+http.listen(80, function(){
   console.log('listening on *:80');
 });
