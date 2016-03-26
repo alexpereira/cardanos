@@ -1,7 +1,5 @@
 
 $(document).ready(function() {
-
-
 	$('.video').videoBG({
 		position:"fixed",
 		zIndex:0,
@@ -9,5 +7,4 @@ $(document).ready(function() {
 		opacity:1,
 		fullscreen:true,
 	});
-		
 })

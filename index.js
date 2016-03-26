@@ -4,6 +4,8 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
+var nickname, language;
+
 var googleTranslate = require('google-translate')("AIzaSyCnqDQPbZOSNLPZ8QhyJcdp6LMBSkvO8Zk");
 
 app.use('/assets', express.static('assets') );
@@ -11,15 +13,26 @@ app.use('/assets', express.static('assets') );
 app.get('/', function(req, res) {
   res.sendFile(__dirname + "/index.html");
 });
-//app.use(express.static(__dirname + '/assets'));
 
 io.on('connection', function(socket){
   console.log('a user connected');
+
+  socket.on('nickname', function(nick){
+    nickname = nick;
+  });
+
+  socket.on('language', function(lang){
+    language = lang;
+  });
+
+  socket.on('chat message', function(msg){
+    googleTranslate.translate(msg, language, function(err, translation) {
+      io.emit('chat message', nickname + ": " + translation.translatedText);
+    });
+  });
+
   socket.on('disconnect', function(){
     console.log('user disconnected');
-  });
-  socket.on('chat message', function(msg){
-    io.emit('chat message', msg);
   });
 });
 
@@ -27,6 +40,3 @@ http.listen(3000, function(){
   console.log('listening on *:3000');
 });
 
-googleTranslate.translate('Hey man, my name is Alex and I am amazing!', 'es', function(err, translation) {
-  console.log(translation.translatedText);
-});
