@@ -12,7 +12,6 @@
   <script type="text/javascript" src="assets/jquery.videoBG.js"></script>
   <script type="text/javascript" src="assets/script.js"></script>
   <link href="assets/jquery.cssemoticons.css" media="screen" rel="stylesheet" type="text/css" />
-  <script src="assets/jquery-1.4.2.min.js" type="text/javascript"></script>
   <script src="assets/jquery.cssemoticons.min.js" type="text/javascript"></script>
   
 </head>
@@ -29,10 +28,7 @@
 
     <div class="taglineContainer">
       <h1 class="tagline">Multilingual Chat Platform</h1>
-
       <p class="description">PolyChat allows for enhanced communication between individuals speaking different languages, within local and global communities.</p>
-
-
     </div>
 
 
@@ -75,8 +71,14 @@
       return false;
     });
     socket.on('chat message', function(msg){
-      msgtext = msg.text;
-      $('#messages').append($('<li class="emoji">').css({"background": msg.bgcolor, "color": msg.txtcolor}).text(msgtext).emoticonize());
+      original_text = msg.otext;
+      translated_text = msg.text;
+      element = $('<li class="emoji">').css({"background": msg.bgcolor, "color": msg.txtcolor}).text(original_text).emoticonize();
+      $('#messages').append(element);
+      element.fadeOut(2000, function() {
+        $(this).text(translated_text).fadeIn();
+      });
+      
     });
   </script>
 

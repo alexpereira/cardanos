@@ -107,7 +107,7 @@ io.on('connection', function(socket){
 	      } else {
 		  msg_to_send = msg;
 	      }
-              conn.emit('chat message', {text: info.nickname + emot + ": " + msg_to_send, bgcolor: info.color, txtcolor: "black"});
+              conn.emit('chat message', {otext: info.nickname + emot + ": " + msg, text: info.nickname + emot + ": " + msg_to_send, bgcolor: info.color, txtcolor: "black"});
 	  });
       }
       a(info2.conn);
