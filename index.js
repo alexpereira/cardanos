@@ -14,6 +14,9 @@ function language(text) {
 }
 
 function sentiment(text, lang) {
+    if (lang.toLowerCase() != 'eng') {
+	return;
+    }
     safe_text = text.replace("\"", "\\\"");
     safe_lang = lang.replace("\"", "\\\"");
     command = __dirname + "/haven_request.sh sync analyzesentiment \"text=" + safe_text + "\" \"language=" + safe_lang + "\"";
@@ -65,7 +68,7 @@ io.on('connection', function(socket){
     if (lang != 'auto123456789') {
 	clientList[socket.id].auto = false;
     } else {
-	clientList[socket.id].language = "en"; // default
+	clientList[socket.id].language = "eng"; // default
     }
   });
 
@@ -78,11 +81,25 @@ io.on('connection', function(socket){
     }
 
     info = clientList[socket.id];
+      // Do sentiment analysis
+      s = sentiment(msg,info.language);
+      if (typeof s != 'undefined') {
+	  s = s.sentiment;
+	  switch(s) {
+	  case 'positive': emot = ' ( :) )'; break;
+	  case 'neutral': emot = ' ( :| )'; break;
+	  case 'negative': emot = ' ( :( )'; break;
+	  default: emot = '';
+	  }
+      } else {
+	  emot = ''
+      }
     for(id in clientList) {
       var info2 = clientList[id];
       if (info2.language == '') {
 	  continue
       }
+
       a = function(conn) {
 	  googleTranslate.translate(msg, info2.language, function(err, translation) {
 	      if (typeof translation != 'undefined') {
@@ -90,7 +107,7 @@ io.on('connection', function(socket){
 	      } else {
 		  msg_to_send = msg;
 	      }
-              conn.emit('chat message', {text: info.nickname + ": " + msg_to_send, bgcolor: info.color, txtcolor: "black"});
+              conn.emit('chat message', {text: info.nickname + emot + ": " + msg_to_send, bgcolor: info.color, txtcolor: "black"});
 	  });
       }
       a(info2.conn);

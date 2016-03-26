@@ -1,5 +1,5 @@
 #!/bin/bash
-command="curl -X POST"
+command="curl"
 for ((i=3; i <= $#; i++))
 do
     command="$command --data-urlencode \"${!i}\""
