@@ -71,7 +71,8 @@
       return false;
     });
     socket.on('chat message', function(msg){
-      $('#messages').append($("<li>").text(msg));
+      msgtext = msg.text;
+      $('#messages').append($('<li>').css({"background": msg.bgcolor, "color": msg.txtcolor}).text(msgtext));
     });
   </script>
 
