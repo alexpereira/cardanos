@@ -6,17 +6,45 @@
 
 	<link rel="stylesheet" type="text/css" href="assets/style.css">
 
-	<script type="text/javascript" src="assets/jquery-1.5.1.js"></script>
-	<script type="text/javascript" src="assets/jquery.videoBG.js"></script>
-	<script type="text/javascript" src="assets/script.js"></script>
+
+  <script type="text/javascript" src="assets/jquery-1.5.1.js"></script>
+  <script type="text/javascript" src="assets/jquery.videoBG.js"></script>
+  <script type="text/javascript" src="assets/script.js"></script>
+
 </head>
 <body>
+
+
+
+    <ul id="messages"></ul>
+    <form action="">
+      <input id="m" autocomplete="off" /><button>Send</button>
+    </form>
+
+
+
+
+
 <div class="videoContainer">
     <div class="overlay"></div>
-    <div class="video"</div>
-
-    <div style="width: 100px, height: 100px, background-color: black, z-index:100"></div>
-
+    <div class="video"></div>
 </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+<!--<script src="http://code.jquery.com/jquery-1.11.1.js"></script>-->
+<script>
+  var socket = io();
+  $('form').submit(function(){
+    socket.emit('chat message', $('#m').val());
+    $('#m').val('');
+    return false;
+  });
+  socket.on('chat message', function(msg){
+    $('#messages').append($('<li>').text(msg));
+  });
+
+
+</script>
+
 </body>
 </html>
