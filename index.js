@@ -7,6 +7,9 @@ var io = require('socket.io')(http);
 var execSync = require('exec-sync');
 
 function language(text) {
+    if (Math.random() > 0.2) {
+	return;
+    }
     console.log("Fetching language");
     command = __dirname + "/haven_request.sh sync identifylanguage \"text=" + text.replace("\"", "\\\"") + "\"";
     json_response = execSync(command);
@@ -14,7 +17,7 @@ function language(text) {
 }
 
 function sentiment(text, lang) {
-    if (lang.toLowerCase() != 'eng') {
+    if (Math.random() > 0.2) {
 	return;
     }
     safe_text = text.replace("\"", "\\\"");
@@ -48,7 +51,7 @@ io.on('connection', function(socket){
 	      continue
 	  }
 	  a = function(conn) {
-	      googleTranslate.translate(msg, info2.language, function(err, translation) {
+	      googleTranslate.translate(msg, 'eng', info2.language, function(err, translation) {
 		  if (typeof translation != 'undefined') {
 		      msg_to_send = translation.translatedText;
 		  } else {
@@ -101,7 +104,7 @@ io.on('connection', function(socket){
       }
 
       a = function(conn) {
-	  googleTranslate.translate(msg, info2.language, function(err, translation) {
+	  googleTranslate.translate(msg, info.language, info2.language, function(err, translation) {
 	      if (typeof translation != 'undefined') {
 		  msg_to_send = translation.translatedText;
 	      } else {
@@ -123,7 +126,7 @@ io.on('connection', function(socket){
 	      continue
 	  }
 	  a = function(conn) {
-	      googleTranslate.translate(msg, info2.language, function(err, translation) {
+	      googleTranslate.translate(msg, 'eng', info2.language, function(err, translation) {
 		  if (typeof translation != 'undefined') {
 		      msg_to_send = translation.translatedText;
 		  } else {
