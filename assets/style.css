@@ -10,3 +10,49 @@
     background: black;
     opacity: 0.1;
 }
+
+.logo {
+    height: 160px;
+    position: relative;
+    top: 20px;
+    left: 20px;
+    background: url("cardanos1.png");
+    background-repeat: no-repeat;
+    background-size: 180px;
+}
+
+.taglineContainer{
+    text-align: center;
+    position: relative;
+    width: 900px;
+    margin: 0 auto;
+}
+
+.tagline{
+    font-family: 'Oswald', sans-serif;
+    font-weight: 300;
+    font-size: 65px;
+    text-align: center;
+    padding: 30px 15px;
+    color: #D3D3D3;
+}
+
+.description{
+    font-family: 'Oswald', sans-serif;
+    font-size: 25px;
+    text-align: center;
+    padding: 30px 155px;
+    color: #D3D3D3;
+}
+
+.button {
+    font-family: 'Oswald', sans-serif;
+    background-color: #e7e7e7;
+    color: black;
+    border: none;
+    padding: 8px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
